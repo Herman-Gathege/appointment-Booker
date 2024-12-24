@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <h1>Appointment Bookings</h1>
+
+    <!-- Display error message if passed from server -->
+    <% if (errorMessage) { %>
+        <div style="color: red; font-weight: bold;">
+            <p><%= errorMessage %></p>
+        </div>
+    <% } %>
+
+    <form action="/book-appointment" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="contact">Contact Information:</label>
+        <input type="text" id="contact" name="contact" required>
+
+        <label for="service">Service Type:</label>
+        <select id="service" name="serviceType" required>
+            <option value="consultation">Consultation</option>
+            <option value="haircut">Haircut</option>
+            <option value="tattoo session">Tattoo session</option>
+            <option value="wine and jazz">Wine and jazz</option>
+            <option value="skiing">skiing</option>
+
+        </select>
+
+        <label for="datetime">Preferred Date and Time:</label>
+        <input type="datetime-local" id="datetime" name="date" required>
+
+        <button type="submit">Book Appointment</button>
+    </form>
+
+    <% if (appointments && appointments.length > 0) { %>
+        <h2>Existing Appointments</h2>
+        <ul>
+            <% appointments.forEach(function(appointment) { %>
+                <li><%= appointment.name %> - <%= appointment.serviceType %> on <%= appointment.date %></li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No appointments available.</p>
+    <% } %>
+</body>
+</html>
